@@ -149,7 +149,7 @@ class SignUpVC: UIViewController {
                             if let user = user {
                                 var userData = [String: Any]()
                                 let image = UIImage(named: "emptyImage")
-                                let imageData = UIImageJPEGRepresentation(image!, 0.5)
+                                let imageData = image!.jpegData(compressionQuality: 0.5)
                                 let metadata = StorageMetadata()
                                 metadata.contentType = "image/jpeg"
                                 DataService.ds.STORAGE_USER_IMAGE.child("\(user.uid).jpg").putData(imageData!, metadata: metadata, completion: { (metadata, error) in

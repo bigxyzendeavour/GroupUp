@@ -31,7 +31,7 @@ class NewGroupPreviousPhotosVC: UIViewController, UICollectionViewDelegate, UICo
         selectedPhotoImageView.isUserInteractionEnabled = true
         
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        layout.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
         layout.minimumInteritemSpacing = 0
         layout.itemSize = CGSize(width: (self.view.frame.width - 30)/3, height: (self.view.frame.width - 30)/3)
     }
@@ -61,7 +61,7 @@ class NewGroupPreviousPhotosVC: UIViewController, UICollectionViewDelegate, UICo
         }
     }
     
-    func imageTapped(_ sender: UITapGestureRecognizer) {
+    @objc func imageTapped(_ sender: UITapGestureRecognizer) {
         let opalImagePicker = OpalImagePickerController()
         opalImagePicker.imagePickerDelegate = self
         opalImagePicker.maximumSelectionsAllowed = 10
@@ -123,7 +123,7 @@ class NewGroupPreviousPhotosVC: UIViewController, UICollectionViewDelegate, UICo
                 DataService.ds.REF_GROUPS.child(groupID).child("Group Detail").setValue(newGroupDetailForFirebase)
                 
                 let displayID = "Display.jpg"
-                let imageData = UIImageJPEGRepresentation(newGroup.groupDetail.groupDisplayImage, 0.5)
+                let imageData = newGroup.groupDetail.groupDisplayImage.jpegData(compressionQuality: 0.5)
                 let metadata = StorageMetadata()
                 metadata.contentType = "image/jpeg"
                 DataService.ds.STORAGE_GROUP_IMAGE.child(groupID).child(displayID).putData(imageData!, metadata: metadata, completion: { (metadata, error) in
@@ -145,7 +145,7 @@ class NewGroupPreviousPhotosVC: UIViewController, UICollectionViewDelegate, UICo
                 if !newGroup.groupPhotos.isEmpty {
                     for photo in newGroup.groupPhotos {
                         let image = photo.photo
-                        let imageData = UIImageJPEGRepresentation(image, 0.5)
+                        let imageData = image.jpegData(compressionQuality: 0.5)
                         let imageUid = photo.photoID
                         let metadata = StorageMetadata()
                         metadata.contentType = "image/jpeg"

@@ -173,7 +173,7 @@ open class OpalImagePickerRootViewController: UIViewController {
         
         //Lower priority to override left constraint for animations
         let leftCollectionViewConstraint = view.leftAnchor.constraint(equalTo: collectionView.leftAnchor)
-        leftCollectionViewConstraint.priority = 999
+        leftCollectionViewConstraint.priority = UILayoutPriority(rawValue: 999)
         constraints += [leftCollectionViewConstraint]
         
         constraints += [view.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor)]
@@ -263,14 +263,14 @@ open class OpalImagePickerRootViewController: UIViewController {
         self.doneButton = doneButton
     }
     
-    func cancelTapped() {
+    @objc func cancelTapped() {
         dismiss(animated: true) { [weak self] in
             guard let imagePicker = self?.navigationController as? OpalImagePickerController else { return }
             self?.delegate?.imagePickerDidCancel?(imagePicker)
         }
     }
     
-    func doneTapped() {
+    @objc func doneTapped() {
         guard let imagePicker = navigationController as? OpalImagePickerController else { return }
         
         let indexPathsForSelectedItems = collectionView?.indexPathsForSelectedItems ?? []
@@ -293,7 +293,7 @@ open class OpalImagePickerRootViewController: UIViewController {
             selectedURLs += [url]
         }
         delegate?.imagePicker?(imagePicker, didFinishPickingExternalURLs: selectedURLs)
-        delegate?.imagePicker?(imagePicker, didFinishPickingImages: imagesDict.values.flatMap({ $0 }))
+        delegate?.imagePicker?(imagePicker, didFinishPickingImages: imagesDict.values.compactMap({ $0 }))
     }
     
     fileprivate func set(image: UIImage?, indexPath: IndexPath, isExternal: Bool) {

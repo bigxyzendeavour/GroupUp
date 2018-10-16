@@ -92,7 +92,7 @@ class NearbyGroupDetailCell: UITableViewCell {
                         let location = placemark.location!
                         let regionDistance: CLLocationDistance = 1000
                         let coordinate = location.coordinate
-                        let regionSpan = MKCoordinateRegionMakeWithDistance(coordinate, regionDistance, regionDistance)
+                        let regionSpan = MKCoordinateRegion.init(center: coordinate, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
                         let options = [MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center), MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)]
                         let destinationPlacemark = MKPlacemark(coordinate: coordinate)
                         let mapItem = MKMapItem(placemark: destinationPlacemark)

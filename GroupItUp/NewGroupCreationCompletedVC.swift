@@ -23,7 +23,7 @@ class NewGroupCreationCompletedVC: UIViewController, UITableViewDelegate, UITabl
         tableview.dataSource = self
         
         tableview.estimatedRowHeight = tableview.rowHeight
-        tableview.rowHeight = UITableViewAutomaticDimension
+        tableview.rowHeight = UITableView.automaticDimension
         
         if newCreatedGroup == true {
             self.navigationItem.hidesBackButton = true

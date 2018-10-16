@@ -34,12 +34,15 @@ class DisplayPhotoUpdateVC: UIViewController, UIImagePickerControllerDelegate, U
         displayImageView.image = image
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        selectedImage = (info[UIImagePickerControllerOriginalImage] as! UIImage)
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
+        selectedImage = (info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as! UIImage)
         displayImageView.image = selectedImage
         activityIndicator.startAnimating()
         let groupID = currentGroup.groupID
-        let imageData = UIImageJPEGRepresentation(selectedImage, 0.5)
+        let imageData = selectedImage.jpegData(compressionQuality: 0.5)
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
         DataService.ds.STORAGE_GROUP_IMAGE.child(groupID).child("Display.jpg").putData(imageData!, metadata: metadata) { (metadata, error) in
@@ -60,4 +63,14 @@ class DisplayPhotoUpdateVC: UIViewController, UIImagePickerControllerDelegate, U
         imagePicker.sourceType = .photoLibrary
         self.present(imagePicker, animated: true, completion: nil)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

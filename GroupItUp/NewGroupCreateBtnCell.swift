@@ -141,7 +141,7 @@ class NewGroupCreateBtnCell: UITableViewCell {
             let yesActionHandler = {(action: UIAlertAction) -> Void in
                 self.getDelegate().startActivityIndicator()
                 let imageID = "Display.jpg"
-                let imageData = UIImageJPEGRepresentation(self.getDelegate().getGroupDisplayImage(), 0.25)
+                let imageData = (self.getDelegate().getGroupDisplayImage()).jpegData(compressionQuality: 0.25)
                 let metadata = StorageMetadata()
                 metadata.contentType = "image/jpeg"
                 DataService.ds.STORAGE_GROUP_IMAGE.child(groupID).child(imageID).putData(imageData!, metadata: metadata, completion: { (metadata, error) in
@@ -185,7 +185,7 @@ class NewGroupCreateBtnCell: UITableViewCell {
             self.getDelegate().startActivityIndicator()
             let image = getDelegate().getGroupDisplayImage()
             let imageID = "Display.jpg"
-            let imageData = UIImageJPEGRepresentation(image, 0.5)
+            let imageData = image.jpegData(compressionQuality: 0.5)
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
             DataService.ds.STORAGE_GROUP_IMAGE.child(groupID).child(imageID).putData(imageData!, metadata: metadata, completion: { (metadata, error) in
@@ -228,7 +228,7 @@ class NewGroupCreateBtnCell: UITableViewCell {
             let allPreviousPhotos = getDelegate().getPreviousGroupPhotos()
             for i in 0..<allPreviousPhotos.count {
                 let image = allPreviousPhotos[i]
-                let imageData = UIImageJPEGRepresentation(image, 0.5)
+                let imageData = image.jpegData(compressionQuality: 0.5)
                 var imageUid: String
                 if i < 9 {
                     imageUid = "0\(i + 1)"

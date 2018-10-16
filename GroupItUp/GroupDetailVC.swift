@@ -29,7 +29,7 @@ class GroupDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tableView.dataSource = self
         
         tableView.estimatedRowHeight = tableView.rowHeight
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         
         if newCreatedGroup == true {
             self.navigationItem.hidesBackButton = true
@@ -290,7 +290,7 @@ class GroupDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                 id = "\(i + 1)"
             }
             let image = groupPhotos[i]
-            let imageData = UIImageJPEGRepresentation(image, 0.5)
+            let imageData = image.jpegData(compressionQuality: 0.5)
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
             DataService.ds.STORAGE_GROUP_IMAGE.child(selectedGroup.groupID).child("\(id!).jpg").putData(imageData!, metadata: metadata, completion: { (metadata, error) in

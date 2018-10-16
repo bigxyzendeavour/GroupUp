@@ -32,7 +32,7 @@ class GroupDetailUpdateVC: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
 
         tableView.estimatedRowHeight = tableView.rowHeight
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -116,7 +116,7 @@ class GroupDetailUpdateVC: UIViewController, UITableViewDelegate, UITableViewDat
             if selectedCountry != nil && selectedCountry != "" {
                 for country in countries_provinces.keys {
                     if country == selectedCountry {
-                        selectedProvinces = countries_provinces[country] as! [String]
+                        selectedProvinces = countries_provinces[country] as? [String]
                         break
                     }
                 }

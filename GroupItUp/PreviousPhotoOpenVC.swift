@@ -25,7 +25,7 @@ class PreviousPhotoOpenVC: UIViewController, UICollectionViewDelegate, UICollect
         pageControl.numberOfPages = selectedGroup.groupPhotos.count
         
         let layout = photoCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        layout.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
         layout.minimumInteritemSpacing = 0
         layout.itemSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
         

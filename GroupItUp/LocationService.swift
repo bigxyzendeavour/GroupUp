@@ -33,7 +33,7 @@ class LocationServices {
                 
             } else {
                 
-                let placeArray = placemarks as [CLPlacemark]!
+                let placeArray = placemarks
                 
                 var placeMark: CLPlacemark!
                 
@@ -59,7 +59,7 @@ class LocationServices {
                 
             } else{
                 
-                let placeArray = placemarks as [CLPlacemark]!
+                let placeArray = placemarks
                 
                 var placeMark: CLPlacemark!
                 

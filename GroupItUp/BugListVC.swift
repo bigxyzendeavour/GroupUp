@@ -69,7 +69,7 @@ class BugListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func fetchDefectList() {
+    @objc func fetchDefectList() {
         defectList.removeAll()
         DataService.ds.REF_DEFECTS.observeSingleEvent(of: .value, with: { (snapshot) in
             if let snapShot = snapshot.children.allObjects as? [DataSnapshot] {

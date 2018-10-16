@@ -176,15 +176,18 @@ class NewGroupCreationVC: UIViewController, UITableViewDelegate, UITableViewData
 //        }
 //    }
 
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        selectedImage = (info[UIImagePickerControllerEditedImage] as! UIImage)
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
+        selectedImage = (info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage)] as! UIImage)
         newGroup.groupDetail.groupDisplayImage = selectedImage!
         reloadSection(tableView: self.tableView, indexSection: selectedIndex)
         imagePicker.dismiss(animated: true, completion: nil)
         
     }
     
-    func imageTapped(_ sender: UITapGestureRecognizer) {
+    @objc func imageTapped(_ sender: UITapGestureRecognizer) {
         let location = sender.location(in: tableView)
         let ip = tableView.indexPathForRow(at: location)!
         selectedIndex = ip.row
@@ -338,4 +341,14 @@ class NewGroupCreationVC: UIViewController, UITableViewDelegate, UITableViewData
 //        }
 //        return selectedProvinces
 //    }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

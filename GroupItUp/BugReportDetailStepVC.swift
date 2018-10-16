@@ -91,7 +91,7 @@ class BugReportDetailStepVC: UIViewController, UITableViewDelegate, UITableViewD
         destStep.stepNum = destinationIndexPath.row + 1
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         //        [Step1, Step2, Step3, Step4, Step5]
         //        [Step1, Step2, Step4, Step5]
@@ -117,8 +117,11 @@ class BugReportDetailStepVC: UIViewController, UITableViewDelegate, UITableViewD
         return 360
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
+        if let selectedImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage {
             let index = NSIndexPath(row: selectedIndex, section: 0) as IndexPath
             if let cell = tableView(tableView, cellForRowAt: index) as? DefectStepCell {
                 cell.stepImage.image = selectedImage
@@ -133,7 +136,7 @@ class BugReportDetailStepVC: UIViewController, UITableViewDelegate, UITableViewD
         dismiss(animated: true, completion: nil)
     }
     
-    func imageTapped(_ sender: UITapGestureRecognizer) {
+    @objc func imageTapped(_ sender: UITapGestureRecognizer) {
         let location = sender.location(in: tableView)
         let ip = tableView.indexPathForRow(at: location)!
         selectedIndex = ip.row
@@ -241,7 +244,7 @@ class BugReportDetailStepVC: UIViewController, UITableViewDelegate, UITableViewD
                 
                 for i in 0..<allDefectImages.count {
                     let image = allDefectImages[i]
-                    if let imageData = UIImageJPEGRepresentation(image, 0.5) {
+                    if let imageData = image.jpegData(compressionQuality: 0.5) {
                         let metadata = StorageMetadata()
                         metadata.contentType = "image/jpeg"
                         if i == 0 {
@@ -292,4 +295,14 @@ class BugReportDetailStepVC: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }
